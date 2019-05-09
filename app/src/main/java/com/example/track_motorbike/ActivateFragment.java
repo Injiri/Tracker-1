@@ -1,13 +1,19 @@
 package com.example.track_motorbike;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.telephony.SmsManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class ActivateFragment extends Fragment implements View.OnClickListener {
 
@@ -17,7 +23,11 @@ public class ActivateFragment extends Fragment implements View.OnClickListener {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_activate, null);
+        View view = inflater.inflate(R.layout.fragment_activate, null);
+
+        activate = (Button) view.findViewById(R.id.btn_activate);
+        activate.setOnClickListener(this);
+        return  view;
 
     }
 
@@ -25,22 +35,52 @@ public class ActivateFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
 
+        switch(v.getId()){
+            case R.id.btn_activate:
+                sendSMS();
+                break;
+            default:
+                break;
+        }
+     }
+
+    public void sendSMS() {
+            SmsManager sms = SmsManager.getDefault();
+            String msg = "Activate";
+            sms.sendTextMessage("0701869953", null, msg, null, null);
+
+     if (ContextCompat.checkSelfPermission(this,
+    Manifest.permission.SEND_SMS)
+            != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                Manifest.permission.SEND_SMS)) {
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.SEND_SMS},
+                    MY_PERMISSIONS_REQUEST_SEND_SMS);
+        }
     }
 }
 
-public class fragmentOne extends Fragment implements  {
-    Button myButton;
-
     @Override
-    public View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedinstanceState) {
-        View myView = inflater.inflate(R.layout.fragment_1, container, false);
-        myButton = (Button) myView.findViewById(R.id.myButton);
-        myButton.setOnClickListener(this);
-        return myView;
+    public void onRequestPermissionsResult(int requestCode,String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_SEND_SMS: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    SmsManager smsManager = SmsManager.getDefault();
+                    smsManager.sendTextMessage(phoneNo, null, message, null, null);
+                    Toast.makeText(getApplicationContext(), "SMS sent.",
+                            Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(),
+                            "SMS faild, please try again.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+            }
+        }
+
     }
 
-    @Override
-    public void onClick(View v) {
-        // implements your things
-    }
+
 }
