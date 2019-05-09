@@ -12,12 +12,12 @@
         android:title="@string/title_activate" />
 
     <item
-        android:id="@+id/navigation_profile"
-        android:icon="@drawable/ic_person_black_24dp"
-        android:title="@string/title_profile" />
-    <item
         android:id="@+id/navigation_secure"
         android:icon="@drawable/ic_security_black_24dp"
         android:title="@string/title_secure"/>
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/ic_person_black_24dp"
+        android:title="@string/title_profile" />
 
 </menu>

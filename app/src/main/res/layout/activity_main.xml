@@ -20,7 +20,7 @@
     </FrameLayout>
 
     <android.support.design.widget.BottomNavigationView
-        android:id="@+id/nav_view"
+        android:id="@+id/navigation_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
