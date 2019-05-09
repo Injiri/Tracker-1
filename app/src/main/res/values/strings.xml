@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Track Your Motorbike</string>
+    <string name="title_track">Track</string>
+    <string name="title_activate">Activate</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_secure">Secure</string>
+
+</resources>
