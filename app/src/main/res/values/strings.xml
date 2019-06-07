@@ -6,5 +6,6 @@
     <string name="title_secure">Secure</string>
     <string name="btn_activate">Activate</string>
     <string name="btn_track">Track</string>
+    <string name="title_activity_maps">Map</string>
 
 </resources>
