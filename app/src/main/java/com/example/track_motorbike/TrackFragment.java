@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
@@ -23,7 +24,6 @@ public class TrackFragment extends Fragment implements OnMapReadyCallback {
 
     SupportMapFragment mapFragment;
     GoogleMap mgoogleMap;
-    MapView mapView;
     View view;
 
     @Nullable
@@ -32,11 +32,11 @@ public class TrackFragment extends Fragment implements OnMapReadyCallback {
         view = inflater.inflate(R.layout.fragment_track, null);
         mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
 
-        if (mapFragment == null){
+        if (mapFragment == null) {
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             mapFragment = SupportMapFragment.newInstance();
-            fragmentTransaction.replace(R.id.map,mapFragment).commit();
+            fragmentTransaction.replace(R.id.map, mapFragment).commit();
 
         }
 
@@ -47,26 +47,30 @@ public class TrackFragment extends Fragment implements OnMapReadyCallback {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mapView = (MapView) view.findViewById(R.id.map);
+        mapFragment.getMapAsync(this);
+
+        /*mapView = (MapView) view.findViewById(R.id.map);
         if(mapView != null) {
             mapView.onCreate(null);
             mapView.onResume();
             mapView.getMapAsync(this);
-        }
+        }*/
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        MapsInitializer.initialize(getContext());
+        // MapsInitializer.initialize(getContext());
 
         mgoogleMap = googleMap;
         googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
-        googleMap.addMarker(new MarkerOptions().position(new LatLng(40.609247,-74.044502)).title("Statue of Liberty")
-        .snippet("I have to go here"));
+        LatLng trackLatLng = new LatLng(0.2827, 34.7519);
 
-        CameraPosition liberty = CameraPosition.builder().target(new LatLng(40.609247,-74.044502)).zoom(10).bearing(0).tilt(45).build();
+        mgoogleMap.addMarker(new MarkerOptions().position(trackLatLng).title("Statue of Liberty")
+                .snippet("I have to go here"));
 
+        //CameraPosition liberty = CameraPosition.builder().target(new LatLng(0.2827,-34.7519)).zoom(10).bearing(0).tilt(45).build();
+        mgoogleMap.moveCamera(CameraUpdateFactory.newLatLng(trackLatLng));
 
     }
 }
