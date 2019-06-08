@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class ActivateFragment extends Fragment{
+public class ActivateFragment extends Fragment implements View.OnClickListener {
 
 
     Button activate;
@@ -25,13 +25,10 @@ public class ActivateFragment extends Fragment{
         View view = inflater.inflate(R.layout.fragment_activate, null);
 
         activate = (Button) view.findViewById(R.id.btn_activate);
-       // activate.setOnClickListener(this);
+        activate.setOnClickListener(this);
         return  view;
 
     }
-
-
-   /* @Override
     public void onClick(View v) {
 
         switch(v.getId()){
@@ -43,13 +40,12 @@ public class ActivateFragment extends Fragment{
         }
      }
 
-   *//* public void sendSMS() {
+   public void sendSMS() {
 
             SmsManager sms = SmsManager.getDefault();
             String msg = "Activate";
             sms.sendTextMessage("0701869953", null, msg, null, null);
 
     }
-*/
 
 }
